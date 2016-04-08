@@ -1,3 +1,8 @@
+/*
+  funkcionalnost odjemalca (obdeluje odgovore, dela izgled, tudi posilja preko klepet.js, sodeluje)
+*/
+
+
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
   if (jeSmesko) {
@@ -9,10 +14,10 @@ function divElementEnostavniTekst(sporocilo) {
 }
 
 function divElementHtmlTekst(sporocilo) {
-  return $('<div></div>').html('<i>' + sporocilo + '</i>');
+  return $('<div></div>').html('<i>' + sporocilo + '</i>'); //kaj to naredi ?
 }
 
-function procesirajVnosUporabnika(klepetApp, socket) {
+function procesirajVnosUporabnika(klepetApp, socket) { //kaj je klepetApp ?
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
   var sistemskoSporocilo;
@@ -99,6 +104,12 @@ $(document).ready(function() {
     for (var i=0; i < uporabniki.length; i++) {
       $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
     }
+    
+    $('#seznam-uporabnikov div').click(function() {
+      $('#poslji-sporocilo').val("/zasebno \"" + $(this).text() + "\" ");
+      $('#poslji-sporocilo').focus();
+    });
+  
   });
 
   setInterval(function() {
