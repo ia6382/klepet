@@ -67,6 +67,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     sistemskoSporocilo = klepetApp.procesirajUkaz(sporocilo);
     if (sistemskoSporocilo) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
+      var htmlImg = izlusciHtmlImg(sporocilo);
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
