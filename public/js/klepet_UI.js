@@ -27,7 +27,7 @@ function divElementVideo(sporocilo) {
 }
 
 function izlusciHtmlYT(sporocilo){
-  var sepReg = /(https|http)/;
+  var sepReg = /(https|http|\s)/;
   var tabelaTmp = sporocilo.split(sepReg);
   var tabela = [];
   var j = 0;
