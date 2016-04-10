@@ -109,6 +109,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
       var HtmlYT = izlusciHtmlYT(sporocilo);
       var htmlImg = izlusciHtmlImg(sporocilo);
+      $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
