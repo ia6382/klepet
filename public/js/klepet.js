@@ -3,7 +3,6 @@
   
 */
 
-
 var Klepet = function(socket) {
   this.socket = socket;
 };
