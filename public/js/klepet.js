@@ -60,3 +60,5 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
 
   return sporocilo;
 };
+
+//sd
