@@ -162,6 +162,18 @@ $(document).ready(function() {
     $('#kanal').text(trenutniVzdevek + " @ " + trenutniKanal);
     $('#sporocila').append(divElementHtmlTekst('Sprememba kanala.'));
   });
+  
+  socket.on('dregljaj', function(rezultat) {
+    var jeDregljaj = rezultat.dregljaj;
+    if(jeDregljaj){
+      console.log("dregam");
+      $('#sporocila').jrumble();
+      $('#sporocila').trigger('startRumble')
+      setTimeout(function(){
+       $('#sporocila'). trigger('stopRumble')
+      }, 1500);
+    }
+  });
 
   socket.on('sporocilo', function (sporocilo) {
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
