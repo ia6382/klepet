@@ -14,10 +14,10 @@ function divElementEnostavniTekst(sporocilo) {
 }
 
 function divElementHtmlTekst(sporocilo) {
-  return $('<div></div>').html('<i>' + sporocilo + '</i>'); //kaj to naredi ?
+  return $('<div></div>').html('<i>' + sporocilo + '</i>');
 }
 
-function procesirajVnosUporabnika(klepetApp, socket) { //kaj je klepetApp ?
+function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
   var sistemskoSporocilo;
