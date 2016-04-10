@@ -22,8 +22,11 @@ function divElementHtmlTekst(sporocilo) {
   return $('<div></div>').html('<i>' + sporocilo + '</i>');
 }
 
-function izlusciHtmlImg(sporocilo){
-  //moras se splitatt med http(s) in nato vse preveriti v zanki, smesko dela samo en
+function divElementVideo(sporocilo) {
+  return sporocilo;
+}
+
+function izlusciHtmlYT(sporocilo){
   var sepReg = /(https|http)/;
   var tabelaTmp = sporocilo.split(sepReg);
   var tabela = [];
@@ -36,7 +39,40 @@ function izlusciHtmlImg(sporocilo){
       }
     }
   }
-  //console.log(tabela);
+  
+  var yt;
+  var reg = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
+  for(var i = 0;i < tabela.length; i++){
+    sporocilo = tabela[i];
+    yt = sporocilo.match(reg);
+    
+    if(yt != null){
+      var id = yt[1];
+      yt = yt[0].replace(reg, function(url) {
+          return "<iframe src=\"https://www.youtube.com/embed/"+id+"\" style=\"width:200px; height:150px; padding-left: 20px; border: 0;\" allowfullscreen></iframe>";
+      });
+    }
+    
+    if(yt != null){
+       $('#sporocila').append(divElementVideo(yt));
+    }
+  }
+}
+  
+function izlusciHtmlImg(sporocilo){
+  var sepReg = /(https|http)/;
+  var tabelaTmp = sporocilo.split(sepReg);
+  var tabela = [];
+  var j = 0;
+  if(tabelaTmp != undefined){
+    for(var i = 0;i < tabelaTmp.length; i++){
+      if((tabelaTmp[i] == "http") || (tabelaTmp[i] == "https")){
+        tabela[j] = tabelaTmp[i].concat(tabelaTmp[i+1]);
+        j ++;
+      }
+    }
+  }
+  
   var img;
   var reg = /(https|http)?:\/\/.*\.(?:png|jpg|gif)/;
   for(var i = 0;i < tabela.length; i++){
@@ -54,7 +90,6 @@ function izlusciHtmlImg(sporocilo){
       img = null;
     }
     else{
-      //console.log(img);
       if(img != null){
        $('#sporocila').append(divElementSlika(img));
       }
@@ -72,16 +107,15 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     sistemskoSporocilo = klepetApp.procesirajUkaz(sporocilo);
     if (sistemskoSporocilo) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
+      var HtmlYT = izlusciHtmlYT(sporocilo);
       var htmlImg = izlusciHtmlImg(sporocilo);
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
+    var HtmlYT = izlusciHtmlYT(sporocilo);
     var htmlImg = izlusciHtmlImg(sporocilo);
-    /*if(htmlImg != null){
-       $('#sporocila').append(divElementSlika(htmlImg));
-    }*/
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
 
@@ -132,11 +166,8 @@ $(document).ready(function() {
   socket.on('sporocilo', function (sporocilo) {
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
+    var HtmlYT = izlusciHtmlYT(sporocilo.besedilo);
     var htmlImg = izlusciHtmlImg(sporocilo.besedilo);
-    
-    /*if(htmlImg != null){
-       $('#sporocila').append(divElementSlika(htmlImg));
-    }*/
   });
   
   socket.on('kanali', function(kanali) {
@@ -199,4 +230,5 @@ function dodajSmeske(vhodnoBesedilo) {
   return vhodnoBesedilo;
 }
 
+//zadnja verzija
 
