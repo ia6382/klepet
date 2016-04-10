@@ -180,3 +180,5 @@ function dodajSmeske(vhodnoBesedilo) {
   }
   return vhodnoBesedilo;
 }
+
+//zadnja verzija
